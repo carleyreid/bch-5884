@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+# https://github.com/carleyreid/bch-5884 
+
+
+f=float(input("Enter a temperature in Fahrenheit: "))
+
+k=(f-32)*(5/9)+273.15
+
+print("The temperature in Kelvin is", k)
+
+ 
+
+#!/usr/bin/env python3
+# https://github.com/carleyreid/bch-5884
+# I can't get it to work quite right but I'm exhausted
+
+import math
+import numpy
+
+print("Insert coordinates for a right triangle: ")
+
+x1=int(input("What is the x value for point A?: "))
+y1=int(input("What is the y value for point A?: "))
+x2=int(input("What is the x value for point B?: "))
+y2=int(input("What is the y value for point B?: "))
+x3=int(input("What is the x value for point C?: "))
+y3=int(input("What is the y value for point C?: "))
+
+abdx=x1-x2
+abdy=y1-y2
+acdx=x1-x3
+acdy=y1-y3
+bcdx=x2-x3
+bcdy=y2-y3
+
+abd=math.sqrt(abdx**2+abdy**2)
+acd=math.sqrt(acdx**2+acdy**2)
+bcd=math.sqrt(bcdx**2+bcdy**2)
+
+radA=numpy.arccos(abd/bcd)
+radB=numpy.arcsin(acd/bcd)
+radC=numpy.arcsin(abd/bcd)
+
+pi=22/7
+degA=radA*(180/pi)
+degB=radB*(180/pi)
+degC=radB*(180/pi)
+
+print("Angle A in degrees is", degA)
+print("Angle B in degrees is", degB)
+print("Angle C in degrees is", degC)
+
+ 
