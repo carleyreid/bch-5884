@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+#carleyreid
+
+import sys
+import math
+
+
+#open and read pdb file
+pdbname=sys.argv[1]
+f=open(pdbname)
+lines=f.readlines()
+f.close()
+
+#assign dictionary for atom masses (from PT)
+records=[]
+dictionarymass={"H":1.008,"C":12.011,"N":14.007,"O":15.999,"P":30.974,"S":32.06,"MG":24.305}
+
+#define columns of pdb to information
+for line in lines:
+    atom=str(line[0:4])
+    serialnumber=str(line[8:11])
+    name=str(line[14:16])
+    residue=str(line[18:20])
+    chainID=str(line[22])
+    residueseqnumber=int(line[24:26])
+    x=float(line[33:38])
+    y=float(line[40:46])
+    z=float(line[49:54])
+    occupancy=float(line[57:60])
+    tempfactor=float(line[62:66])
+    element=line[76:78].strip()
+    mass=dictionarymass[element]
+
+records.append([atom,serialnumber,name,residue,chainID,residueseqnumber,x,y,z,occupancy,tempfactor,element,mass])
+
+#calculate the geometric center by averaging coordinates
+#define variables to reassign
+sigmam=0
+sigmax=0
+sigmay=0
+sigmaz=0
+
+#coordinates * mass
+#column 11=atom
+#atom masses defined in library
+#columns 6/7/8 are x/y/z coordinates in PDB
+#assign columns to sigmaM, sigmaX, sigmaY, and sigmaZ
+for record in records:
+    sigmam+=record[12]
+    sigmax+=record[12]*record[6]
+    sigmay+=record[12]*record[7]
+    sigmaz+=record[12]*record[8]
+
+#centering
+#sigma(coordinates*mass)/sigma(mass)
+centerx=sigmax/sigmam
+centery=sigmay/sigmam
+centerz=sigmaz/sigmam
+
+
