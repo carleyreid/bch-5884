@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+#https://github.com/carleyreid/bch-5884
+
+import sys
+import math
+
+#funtion #1
+#open and read pdb file 
+def readpdb(pdbname):
+    pdbfile=open(pdbname,'r')
+    lines=pdbname.readlines()
+    pdbname.close()
+
+#define columns of pdb to information
+    records=[]
+    for line in lines:
+        d={}
+            atom=str(line[0:4])
+            serialnumber=str(line[8:11])
+            name=str(line[14:16])
+            residue=str(line[18:20])
+            chainID=str(line[22])
+            residueseqnumber=int(line[24:26])
+            x=float(line[33:38])
+            y=float(line[40:46])
+            z=float(line[49:54])
+            occupancy=float(line[57:60])
+            tempfactor=float(line[62:66])
+            element=line[76:78].strip()
+            mass=dictionarymass[element]
+
+        records.append([atom,serialnumber,name,residue,chainID,residueseqnumber,x,y,z,occupancy,tempfactor,element,mass])
+
+    print(records)
+
+#create a function to find RMSD between two pdb files
+#input two pdb files w/ equal length
+def RMSD():
+    pdb1=sys.argv[1]
+    pdb2=sys.argv[2]
+
+    #call readpdb function to read the files
+    readpdb(pdb1)
+    readpdb(pdb2)
+
+    n=len(records) #number of atoms is length of records list 
+    nRMSD=1/n 
+
+    x1=0
+    y1=0
+    z1=0
+    x2=0
+    y2=0
+    z2=0
+    
+    #xyz components for RMSD eq
+    xRMSD=(x1-x2)**2 
+    yRMSD=(y1-y2)**2 
+    zRMSD=(z1-z2)**2 
+
+    for record in records: 
+        x1+=pdb1(records[7]) #assign x1 to sum of all values in pdb1
+        y1+=pdb1(records[8]) #etc. 
+        z1+=pdb1(records[9])
+        x2+=pdb2(records[7])
+        y2+=pdb2(records[8])
+        z2+=pdb2(records[9])
+
+#calculate
+    RMSD=math.sqrt(nRMSD*xRMSD+yRMSD+zRMSD)
+    
+    print(RMSD)
+
+
+
