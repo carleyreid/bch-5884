@@ -81,6 +81,8 @@ print(peakID)
 
 
 #plot the data
+#includes location of peaks and identity on plot so everything shows up nicely in html
+#x1 etc. are just locations for the info annotations
 pyplot.plot(time,int)
 pyplot.plot(peaktime,peakint,'ro')
 pyplot.xlabel('Time (min)')
@@ -97,7 +99,6 @@ pyplot.show()
 url="file:///Users/carleyreid/BCH5884/sem2/finalprojwebpage.html"
 #causes html code to pop up in text editor when I exit plot
 webbrowser.open_new(url)
-
 #visit url to see the chromatogram and results
 
 
